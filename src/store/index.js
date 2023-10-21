@@ -26,19 +26,7 @@ const store = createStore({
       description: "",
     },
   },
-  mutations: {
-    updatePosts(state, posts) {
-      state.posts = posts;
-    },
-    updatePostImage(state, image) {
-      state.post.image = image;
-    },
-    updatePostSelectedTags(state, selectedTags) {
-      state.post.selectedTags = selectedTags;
-    },
-    updatePostDescription(state, description) {
-      state.post.description = description;
-    },
+  mutations: {    
     resetPost(state) {
       state.post = {
         image: "",
@@ -61,18 +49,21 @@ const store = createStore({
     },
   },
   actions: {
-    getPosts({ commit }) {
-      axios
+    fetchPosts({ state }) {
+      return axios
         .get("http://localhost:3000/posts")
         .then((response) => {
           console.log("Posts:", response.data);
-          commit("updatePosts", response.data.reverse());
+          state.posts = response.data.reverse();
+          return response.data; // Return the fetched posts
         })
         .catch((error) => {
           console.error("Error fetching posts:", error);
+          throw error; // Rethrow the error to be caught in the component
         });
     },
-    savePost({ state, commit }) {
+
+    savePost({ state,  commit  }) {
       const post = {
         image: state.post.image,
         tags: state.post.selectedTags,
@@ -83,8 +74,8 @@ const store = createStore({
         .post("http://localhost:3000/posts", post)
         .then((response) => {
           console.log("Post created:", response.data);
-          commit("resetPost"); // Reset the post data after successful creation
-          // Redirect the user to the post list page
+           commit("resetPost"); // Reset the post data after successful creation
+          // Redirect the user to the post list page 
           router.push("/post-list");
         })
         .catch((error) => {

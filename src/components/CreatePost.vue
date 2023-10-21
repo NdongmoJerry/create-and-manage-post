@@ -45,7 +45,7 @@
 
 <script>
 import NavBar from "../components/NavBar.vue";
-import { mapState, mapMutations, mapActions } from "vuex";
+import { mapState,  mapActions } from "vuex";
 
 export default {
   name: "CreatePost",
@@ -56,11 +56,6 @@ export default {
     ...mapState(["post"]),
   },
   methods: {
-    ...mapMutations([
-      "updatePostImage",
-      "updatePostSelectedTags",
-      "updatePostDescription",
-    ]),
     ...mapActions(["savePost"]),
   },
 };

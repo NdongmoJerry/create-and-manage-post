@@ -42,11 +42,7 @@ export default {
     this.fetchPosts();
   },
   methods: {
-    ...mapActions(["getPosts"]),
-    fetchPosts() {
-      this.getPosts();
-    },
-    // ...
+    ...mapActions(["fetchPosts"]),
   },
 };
 </script>
