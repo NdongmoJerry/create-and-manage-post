@@ -26,28 +26,7 @@ const store = createStore({
       description: "",
     },
   },
-  mutations: {    
-    resetPost(state) {
-      state.post = {
-        image: "",
-        tags: [
-          "transport",
-          "sports",
-          "people",
-          "nightlife",
-          "nature",
-          "food",
-          "fashion",
-          "city",
-          "cats",
-          "business",
-          "other",
-        ],
-        selectedTags: [],
-        description: "",
-      };
-    },
-  },
+ 
   actions: {
     fetchPosts({ state }) {
       return axios
@@ -63,7 +42,7 @@ const store = createStore({
         });
     },
 
-    savePost({ state,  commit  }) {
+    savePost({ state }) {
       const post = {
         image: state.post.image,
         tags: state.post.selectedTags,
@@ -74,8 +53,10 @@ const store = createStore({
         .post("http://localhost:3000/posts", post)
         .then((response) => {
           console.log("Post created:", response.data);
-           commit("resetPost"); // Reset the post data after successful creation
-          // Redirect the user to the post list page 
+        // Reset the form data
+        state.post.image = "";
+        state.post.selectedTags = [];
+        state.post.description = "";
           router.push("/post-list");
         })
         .catch((error) => {
