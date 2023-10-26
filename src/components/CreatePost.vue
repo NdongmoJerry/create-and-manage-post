@@ -23,11 +23,17 @@
             />
           </div>
           <div class="form-group">
-            <label>Tags:</label>
-            <select v-model="post.selectedTags" multiple class="form-control">
-              <option v-for="tag in post.tags" :key="tag">{{ tag }}</option>
-            </select>
+            <label for="tags">Tags</label>
+            <multiselect
+              v-model="post.selectedTags"
+              :options="post.tags"
+              :multiple="true"
+              placeholder="Select tags"
+              class="form-control"
+              required
+            ></multiselect>
           </div>
+    
           <div class="form-group">
             <label>Description:</label>
             <textarea
@@ -44,19 +50,61 @@
 </template>
 
 <script>
+import Multiselect from "vue-multiselect";
 import NavBar from "../components/NavBar.vue";
-import { mapState,  mapActions } from "vuex";
+import axios from "axios";
+
 
 export default {
   name: "CreatePost",
   components: {
     NavBar,
+    Multiselect,
   },
-  computed: {
-    ...mapState(["post"]),
-  },
+ data(){
+  return{
+    post: {
+      image: "",
+      tags: [
+        "transport",
+        "sports",
+        "people",
+        "nightlife",
+        "nature",
+        "food",
+        "fashion",
+        "city",
+        "cats",
+        "business",
+        "other",
+      ],
+      selectedTags: [],
+      description: "",
+    },
+  }
+ },
   methods: {
-    ...mapActions(["savePost"]),
+    savePost() {
+      const post = {
+        image: this.post.image,
+        tags: this.post.selectedTags,
+        description: this.post.description,
+      };
+
+      axios
+        .post("http://localhost:3000/posts", post)
+        .then((response) => {
+          console.log("Post created:", response.data);
+        // Reset the form data
+        this.post.image = "";
+        this.post.selectedTags = [];
+        this.post.description = "";
+          this.$router.push("/post-list");
+        })
+        .catch((error) => {
+          console.error("Error creating post:", error);
+        });
+    },
   },
 };
 </script>

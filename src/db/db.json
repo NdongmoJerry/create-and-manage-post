@@ -9,66 +9,78 @@
     {
       "image": "https://loremflickr.com/320/240",
       "tags": [
-        "other"
+        "people"
       ],
-      "description": "this is other",
-      "id": 4
+      "description": "For hte people",
+      "id": 2
+    },
+    {
+      "image": "https://loremflickr.com/320/240",
+      "tags": [
+        "sports"
+      ],
+      "description": "For sports",
+      "id": 3
     },
     {
       "image": "https://loremflickr.com/320/240",
       "tags": [
         "cats"
       ],
-      "description": "Here is a cats",
+      "description": "For cats ",
+      "id": 4
+    },
+    {
+      "image": "https://loremflickr.com/320/240",
+      "tags": [
+        "business"
+      ],
+      "description": "For businesses",
       "id": 5
-    },
-    {
-      "image": "https://loremflickr.com/320/240",
-      "tags": [
-        "business"
-      ],
-      "description": "I am in for business",
-      "id": 6
-    },
-    {
-      "image": "https://loremflickr.com/320/240",
-      "tags": [
-        "business"
-      ],
-      "description": "This is for business purpose",
-      "id": 7
-    },
-    {
-      "image": "https://loremflickr.com/320/240",
-      "tags": [
-        "people"
-      ],
-      "description": "This is people",
-      "id": 8
-    },
-    {
-      "image": "https://loremflickr.com/320/240",
-      "tags": [
-        "transport"
-      ],
-      "description": "this is trans",
-      "id": 9
-    },
-    {
-      "image": "https://loremflickr.com/320/240",
-      "tags": [
-        "people"
-      ],
-      "description": "this is for people",
-      "id": 10
     },
     {
       "image": "https://loremflickr.com/320/240",
       "tags": [
         "city"
       ],
-      "description": "this is city",
-      "id": 11
+      "description": "To the city's",
+      "id": 6,
+      "selectedTags": [
+        "city"
+      ]
+    },
+    {
+      "image": "https://loremflickr.com/320/240",
+      "tags": [
+        "nightlife"
+      ],
+      "description": "This is for nightlifes",
+      "id": 7,
+      "selectedTags": [
+        "nightlife"
+      ]
+    },
+    {
+      "image": "https://loremflickr.com/320/240",
+      "tags": [
+        "business"
+      ],
+      "description": "this is for businesses",
+      "id": 8,
+      "selectedTags": [
+        "business"
+      ]
+    },
+    {
+      "image": "https://loremflickr.com/320/240",
+      "tags": [
+        "people"
+      ],
+      "description": "this is for the peoples",
+      "id": 9,
+      "selectedTags": [
+        "people"
+      ]
     }
   ]
 }
