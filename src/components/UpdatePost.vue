@@ -24,7 +24,7 @@
               v-model="post.selectedTags"
               :options="allTags"
               :multiple="true"
-              :close-on-select="false"
+              :close-on-select="true"
               placeholder="Select tags"
               class="form-control"
               required

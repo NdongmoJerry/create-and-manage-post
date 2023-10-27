@@ -3,6 +3,9 @@
     <div>
       <router-link class="btn btn-primary my-3" to="/create-post">Create Post</router-link>
     </div>
+     <div v-if="showDeleteAlert" class="alert alert-success mt-3" role="alert">
+      Post deleted successfully
+    </div>
     <div class="row row-cols-1 row-cols-md-3 g-4">
       <div class="col" v-for="post in posts" :key="post.id">
         <div class="card">
@@ -14,10 +17,14 @@
           </ul>
           <div class="card-body">
             <p class="card-text">{{ post.description }}</p>
-            <router-link :to="`/update-post/${post.id}`" class="btn btn-primary">Edit</router-link>
+            <router-link :to="`/update-post/${post.id}`" id="edit" class="btn btn-primary">Edit post</router-link>
+            <button class="btn btn-danger" @click="confirmDeletePost(post.id)">Delete post</button>
           </div>
         </div>
       </div>
+    </div>
+    <div v-if="showDeleteAlert" class="alert alert-success mt-3" role="alert">
+      Post deleted successfully
     </div>
   </div>
 </template>
@@ -30,6 +37,7 @@ export default {
   data() {
     return {
       posts: [],
+      showDeleteAlert: false,
     };
   },
   created() {
@@ -49,6 +57,27 @@ export default {
           throw error;
         });
     },
+    confirmDeletePost(postId) {
+      if (confirm("Are you sure you want to delete this post?")) {
+        this.deletePost(postId);
+      }
+    },
+    deletePost(postId) {
+      axios
+        .delete(`http://localhost:3000/posts/${postId}`)
+        .then(() => {
+          console.log("Post deleted successfully");
+          // Remove the deleted post from the local posts array
+          this.posts = this.posts.filter((post) => post.id !== postId);
+          this.showDeleteAlert = true; // Show the success alert
+          setTimeout(() => {
+            this.showDeleteAlert = false; // Hide the success alert after 3 seconds
+          }, 3000);
+        })
+        .catch((error) => {
+          console.error("Error deleting post:", error);
+        });
+    },
   },
 };
 </script>
@@ -63,5 +92,8 @@ ul li {
   list-style: none;
   margin-top: 10px;
   font-weight: bold;
+}
+#edit{
+  margin-right: 5px;
 }
 </style>

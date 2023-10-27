@@ -1,56 +1,6 @@
 {
   "posts": [
     {
-      "id": 1,
-      "image": "",
-      "tags": [],
-      "description": ""
-    },
-    {
-      "image": "https://loremflickr.com/320/240",
-      "tags": [
-        "people"
-      ],
-      "description": "for the people",
-      "id": 2
-    },
-    {
-      "image": "https://loremflickr.com/320/240",
-      "tags": [
-        "nightlife"
-      ],
-      "description": "for nightlife",
-      "id": 3
-    },
-    {
-      "image": "https://loremflickr.com/320/240",
-      "tags": [
-        "city"
-      ],
-      "description": "the city is here",
-      "id": 4,
-      "selectedTags": []
-    },
-    {
-      "image": "https://loremflickr.com/320/240",
-      "tags": [
-        "cats"
-      ],
-      "description": "these are cats",
-      "id": 5
-    },
-    {
-      "image": "https://loremflickr.com/320/240",
-      "tags": [],
-      "description": "for transport again here",
-      "id": 6
-    },
-    {
-      "image": "https://loremflickr.com/320/240",
-      "description": "For people and sports",
-      "id": 7
-    },
-    {
       "image": "https://loremflickr.com/320/240",
       "tags": [
         "people"
@@ -61,30 +11,58 @@
     {
       "image": "https://loremflickr.com/320/240",
       "tags": [
-        "other"
+        "fashion"
       ],
-      "description": "This is for other",
+      "description": "This is for Fashion",
       "id": 9
     },
     {
       "image": "https://loremflickr.com/320/240",
       "tags": [
-        "people",
-        "cats"
+        "business"
       ],
-      "description": "this is for  cats, and people",
+      "description": "This is for business purposes",
       "id": 10
     },
     {
       "image": "https://loremflickr.com/320/240",
       "tags": [
-        "transport",
-        "people",
-        "city",
-        "fashion"
+        "food"
       ],
-      "description": "this is for food and transports, fashion",
+      "description": "This is for food",
       "id": 11
+    },
+    {
+      "image": "https://loremflickr.com/320/240",
+      "tags": [
+        "nature"
+      ],
+      "description": "This is for nature",
+      "id": 12
+    },
+    {
+      "image": "https://loremflickr.com/320/240",
+      "tags": [
+        "other"
+      ],
+      "description": "This is for the other",
+      "id": 14
+    },
+    {
+      "image": "https://loremflickr.com/320/240",
+      "tags": [
+        "nature"
+      ],
+      "description": "for nature",
+      "id": 15
+    },
+    {
+      "image": "https://loremflickr.com/320/240",
+      "tags": [
+        "sports"
+      ],
+      "description": "for sports only",
+      "id": 16
     }
   ]
 }

@@ -3,7 +3,7 @@ import HomeView from '../views/HomeView.vue';
 import PostList from '../components/PostList.vue';
 import CreatePost from '../components/CreatePost.vue';
 import UpdatePost from '../components/UpdatePost.vue';
-import DeletePost from '../components/DeletePost.vue';
+
 
 const routes = [
   {
@@ -31,11 +31,7 @@ const routes = [
     name: 'update-post',
     component: UpdatePost,
   },
-  {
-    path: '/delete-post/:id',
-    name: 'delete-post',
-    component: DeletePost,
-  },
+
 ];
 
 const router = createRouter({
