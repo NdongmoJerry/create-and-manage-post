@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import PostList from '../components/PostList.vue';
 import CreatePost from '../components/CreatePost.vue';
-import UpdatePost from '../components/UpdatePost.vue';
+import EditPost from '../components/EditPost.vue';
 
 
 const routes = [
@@ -27,9 +27,9 @@ const routes = [
     component: CreatePost,
   },
   {
-    path: '/update-post/:id', // Corrected the path
-    name: 'update-post',
-    component: UpdatePost,
+    path: '/edit-post/:id', // Corrected the path
+    name: 'edit-post',
+    component: EditPost,
   },
 
 ];

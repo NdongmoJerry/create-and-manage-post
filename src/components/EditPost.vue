@@ -62,19 +62,20 @@ export default {
         image: "",
         selectedTags: [],
         description: "",
+        created_at: "", 
       },
       allTags: [
         "transport",
-          "sports",
-          "people",
-          "nightlife",
-          "nature",
-          "food",
-          "fashion",
-          "city",
-          "cats",
-          "business",
-          "other",
+        "sports",
+        "people",
+        "nightlife",
+        "nature",
+        "food",
+        "fashion",
+        "city",
+        "cats",
+        "business",
+        "other",
       ], // Store all available tags
     };
   },
@@ -111,6 +112,7 @@ export default {
         image: this.post.image,
         tags: this.post.selectedTags,
         description: this.post.description,
+        created_at: this.post.created_at, 
       };
       axios
         .put(`http://localhost:3000/posts/${postId}`, updatedPost)

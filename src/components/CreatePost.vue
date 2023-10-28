@@ -89,6 +89,7 @@ export default {
         image: this.post.image,
         tags: this.post.selectedTags,
         description: this.post.description,
+        created_at: new Date().toISOString(),
       };
 
       axios
