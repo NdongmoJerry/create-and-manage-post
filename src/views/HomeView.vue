@@ -1,9 +1,7 @@
 <template>
-    <div>
-       <div>
-        <CreatePost />
-       </div>
-    </div>
+  <div>
+    <CreatePost />
+   </div>
   </template>
   
   <script>

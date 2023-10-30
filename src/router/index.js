@@ -3,18 +3,13 @@ import HomeView from '../views/HomeView.vue';
 import PostList from '../components/PostList.vue';
 import CreatePost from '../components/CreatePost.vue';
 import EditPost from '../components/EditPost.vue';
-
+import DeletePost from '../components/ DeletePost.vue';
 
 const routes = [
   {
     path: '/',
     name: 'home',
     component: HomeView,
-  },
-  {
-    path: '/about',
-    name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
   },
   {
     path: '/post-list',
@@ -27,11 +22,15 @@ const routes = [
     component: CreatePost,
   },
   {
-    path: '/edit-post/:id', // Corrected the path
+    path: '/edit-post/:id', 
     name: 'edit-post',
     component: EditPost,
   },
-
+  {
+    path: '/delete-post/:id', 
+    name: 'delete-post',
+    component: DeletePost,
+  },
 ];
 
 const router = createRouter({

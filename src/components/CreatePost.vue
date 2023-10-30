@@ -1,8 +1,4 @@
 <template>
-  <header>
-    <NavBar />
-  </header>
-
   <div class="container">
     <div class="row">
       <div class="col-12 text-center">
@@ -52,60 +48,18 @@
 
 <script>
 import Multiselect from "vue-multiselect";
-import NavBar from "../components/NavBar.vue";
-import axios from "axios";
+import {mapState, mapActions } from "vuex";
 
 export default {
   name: "CreatePost",
   components: {
-    NavBar,
     Multiselect,
   },
-  data() {
-    return {
-      post: {
-        image: "",
-        tags: [
-          "transport",
-          "sports",
-          "people",
-          "nightlife",
-          "nature",
-          "food",
-          "fashion",
-          "city",
-          "cats",
-          "business",
-          "other",
-        ],
-        selectedTags: [],
-        description: "",
-      },
-    };
+  computed: {
+    ...mapState(["post"]),
   },
-  methods: {
-    savePost() {
-      const post = {
-        image: this.post.image,
-        tags: this.post.selectedTags,
-        description: this.post.description,
-        created_at: new Date().toISOString(),
-      };
-
-      axios
-        .post("http://localhost:3000/posts", post)
-        .then((response) => {
-          console.log("Post created:", response.data);
-          // Reset the form data
-          this.post.image = "";
-          this.post.selectedTags = [];
-          this.post.description = "";
-          this.$router.push("/post-list");
-        })
-        .catch((error) => {
-          console.error("Error creating post:", error);
-        });
-    },
+    methods: {
+    ...mapActions(["savePost"]),
   },
 };
 </script>
