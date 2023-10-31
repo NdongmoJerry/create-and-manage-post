@@ -35,8 +35,7 @@
             </p>
             <router-link
               :to="`/edit-post/${post.id}`"
-              id="edit"
-              class="btn btn-primary"
+              class="btn btn-primary me-2"
               >Edit post</router-link
             >
             <DeletePost :postId="post.id" @postDeleted="handlePostDeleted" />
@@ -57,14 +56,14 @@ export default {
     DeletePost,
   },
   computed: {
-  ...mapGetters(["sortedPosts"]),
-  showDeleteAlert() {
-    return this.$store.state.showDeleteAlert;
+    ...mapGetters(["sortedPosts"]),
+    showDeleteAlert() {
+      return this.$store.state.showDeleteAlert;
+    },
+    showCreateAlert() {
+      return this.$store.state.showCreateAlert;
+    },
   },
-  showCreateAlert() {
-    return this.$store.state.showCreateAlert;
-  },
-},
   created() {
     this.$store.dispatch("fetchPosts");
   },
@@ -100,8 +99,7 @@ ul li {
   margin-top: 10px;
   font-weight: bold;
 }
-
-#edit {
+ #edit {
   margin-right: 5px;
-}
+} 
 </style>
