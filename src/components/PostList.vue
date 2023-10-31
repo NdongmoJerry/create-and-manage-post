@@ -6,6 +6,13 @@
       >
     </div>
     <div
+      v-if="showCreateAlert"
+      class="alert alert-success fixed-top"
+      role="alert"
+    >
+      Post created successfully
+    </div>
+    <div
       v-if="showDeleteAlert"
       class="alert alert-success fixed-top"
       role="alert"
@@ -50,16 +57,14 @@ export default {
     DeletePost,
   },
   computed: {
-    ...mapGetters(["sortedPosts"]),
-    showDeleteAlert: {
-      get() {
-        return this.$store.state.showDeleteAlert;
-      },
-      set(value) {
-        this.$store.commit("SET_SHOW_DELETE_ALERT", value);
-      },
-    },
+  ...mapGetters(["sortedPosts"]),
+  showDeleteAlert() {
+    return this.$store.state.showDeleteAlert;
   },
+  showCreateAlert() {
+    return this.$store.state.showCreateAlert;
+  },
+},
   created() {
     this.$store.dispatch("fetchPosts");
   },

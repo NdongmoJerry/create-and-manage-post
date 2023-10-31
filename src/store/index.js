@@ -39,6 +39,9 @@ const store = createStore({
     REMOVE_DELETED_POST(state, deletedPostId) {
       state.posts = state.posts.filter((post) => post.id !== deletedPostId);
     },
+    SET_SHOW_CREATE_ALERT(state, value) {
+      state.showCreateAlert = value;
+    },
     SET_SHOW_DELETE_ALERT(state, value) {
       state.showDeleteAlert = value;
     },
@@ -73,14 +76,14 @@ const store = createStore({
           throw error;
         });
     },
-    savePost({ state }) {
+    savePost({ state, commit }) {
       const post = {
         image: state.post.image,
         tags: state.post.selectedTags,
         description: state.post.description,
         created_at: new Date().toISOString(),
       };
-
+  
       axios
         .post("http://localhost:3000/posts", post)
         .then((response) => {
@@ -89,6 +92,10 @@ const store = createStore({
           state.post.image = "";
           state.post.selectedTags = [];
           state.post.description = "";
+          commit("SET_SHOW_CREATE_ALERT", true);
+          setTimeout(() => {
+            commit("SET_SHOW_CREATE_ALERT", false);
+          }, 3000);
           router.push("/post-list");
         })
         .catch((error) => {
