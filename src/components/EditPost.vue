@@ -8,12 +8,12 @@
     <div class="row">
       <div class="col-3"></div>
       <div class="col-6">
-        <form @submit.prevent="updatePost">
+        <form @submit.prevent="updatePost(selectedPost.id)">
           <div class="form-group">
             <label>ImageURL:</label>
             <input
               type="text"
-              v-model="post.image"
+              v-model="selectedPost.image"
               class="form-control"
               required
             />
@@ -21,7 +21,7 @@
           <div class="form-group">
             <label for="tags">Tags</label>
             <multiselect
-              v-model="post.selectedTags"
+              v-model="selectedPost.selectedTags"
               :options="allTags"
               :multiple="true"
               :close-on-select="true"
@@ -34,7 +34,7 @@
           <div class="form-group">
             <label>Description:</label>
             <textarea
-              v-model="post.description"
+              v-model="selectedPost.description"
               class="form-control"
               required
             ></textarea>
@@ -45,85 +45,24 @@
     </div>
   </div>
 </template>
-
 <script>
 import Multiselect from "vue-multiselect";
-import axios from "axios";
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: "EditPost",
   components: {
     Multiselect,
   },
-  data() {
-    return {
-      post: {
-        id: "",
-        image: "",
-        selectedTags: [],
-        description: "",
-        created_at: "", 
-      },
-      allTags: [
-        "transport",
-        "sports",
-        "people",
-        "nightlife",
-        "nature",
-        "food",
-        "fashion",
-        "city",
-        "cats",
-        "business",
-        "other",
-      ], // Store all available tags
-    };
+  computed: {
+    ...mapState(["selectedPost", "allTags"]),
   },
   created() {
-    this.fetchPost();
-    this.fetchAllTags();
+    const postId = this.$route.params.id;
+    this.fetchPost(postId);
   },
   methods: {
-    fetchPost() {
-      const postId = this.$route.params.id;
-      axios
-        .get(`http://localhost:3000/posts/${postId}`)
-        .then((response) => {
-          this.post = response.data;
-          this.post.selectedTags = response.data.tags;
-        })
-        .catch((error) => {
-          console.error("Error fetching post:", error);
-        });
-    },
-    fetchAllTags() {
-      axios
-        .get("http://localhost:3000/tags")
-        .then((response) => {
-          this.allTags = response.data;
-        })
-        .catch((error) => {
-          console.error("Error fetching tags:", error);
-        });
-    },
-    updatePost() {
-      const postId = this.$route.params.id;
-      const updatedPost = {
-        image: this.post.image,
-        tags: this.post.selectedTags,
-        description: this.post.description,
-        created_at: this.post.created_at, 
-      };
-      axios
-        .put(`http://localhost:3000/posts/${postId}`, updatedPost)
-        .then((response) => {
-          console.log("Post updated:", response.data);
-          this.$router.push("/post-list");
-        })
-        .catch((error) => {
-          console.error("Error updating post:", error);
-        });
-    },
+    ...mapActions(['fetchPost', 'fetchAllTags', 'updatePost']),
   },
 };
 </script>

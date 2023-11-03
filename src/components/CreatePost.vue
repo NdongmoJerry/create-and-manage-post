@@ -8,12 +8,12 @@
     <div class="row">
       <div class="col-3"></div>
       <div class="col-6">
-        <form @submit.prevent="savePost">
+        <form @submit.prevent="submitPost">
           <div class="form-group">
-            <label>ImageURL:</label>
+            <label>Image URL:</label>
             <input
               type="text"
-              v-model="post.image"
+              v-model="image"
               class="form-control"
               required
             />
@@ -21,8 +21,8 @@
           <div class="form-group">
             <label for="tags">Tags</label>
             <multiselect
-              v-model="post.selectedTags"
-              :options="post.tags"
+              v-model="selectedTags"
+              :options="allTags"
               :multiple="true"
               :close-on-select="true"
               placeholder="Select tags"
@@ -30,16 +30,15 @@
               required
             ></multiselect>
           </div>
-
           <div class="form-group">
             <label>Description:</label>
             <textarea
-              v-model="post.description"
+              v-model="description"
               class="form-control"
               required
             ></textarea>
-            <button class="btn btn-primary mt-3">Submit</button>
           </div>
+          <button class="btn btn-primary mt-3">Submit</button>
         </form>
       </div>
     </div>
@@ -48,22 +47,44 @@
 
 <script>
 import Multiselect from "vue-multiselect";
-import {mapState, mapActions } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "CreatePost",
   components: {
     Multiselect,
   },
-  computed: {
-    ...mapState(["post"]),
+  data() {
+    return {
+      image: "",
+      selectedTags: [],
+      description: "",
+    };
   },
-    methods: {
+  computed: {
+    allTags() {
+      return this.$store.state.allTags;
+    },
+  },
+  methods: {
     ...mapActions(["savePost"]),
+    submitPost() {
+      const post = {
+        image: this.image,
+        tags: this.selectedTags,
+        description: this.description,
+      };
+      this.savePost(post)
+        .then(() => {
+          this.image = "";
+          this.selectedTags = [];
+          this.description = "";
+        })
+        .catch((error) => {
+          console.error("Error saving post:", error);
+        });
+    },
   },
 };
 </script>
 
-<style scoped>
-/* Add your component-specific styles here */
-</style>

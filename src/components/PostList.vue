@@ -1,22 +1,12 @@
 <template>
   <div class="container">
     <div>
-      <router-link class="btn btn-primary my-3" to="/create-post"
-        >Create Post</router-link
-      >
+      <router-link class="btn btn-primary my-3" to="/create-post">Create Post</router-link>
     </div>
-    <div
-      v-if="showCreateAlert"
-      class="alert alert-success fixed-top"
-      role="alert"
-    >
+    <div v-if="showCreateAlert" class="alert alert-success fixed-top" role="alert">
       Post created successfully
     </div>
-    <div
-      v-if="showDeleteAlert"
-      class="alert alert-success fixed-top"
-      role="alert"
-    >
+    <div v-if="showDeleteAlert" class="alert alert-success fixed-top" role="alert">
       Post deleted successfully
     </div>
     <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -25,19 +15,15 @@
           <div class="embed-responsive embed-responsive-16by9">
             <img class="card-img-top" :src="post.image" />
           </div>
-          <ul>
-            <li v-for="tag in post.tags" :key="tag">{{ tag }}</li>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" v-for="tag in post.tags" :key="tag">
+              <span class="badge bg-primary">{{ tag }}</span>
+            </li>
           </ul>
           <div class="card-body">
             <p class="card-text">{{ post.description }}</p>
-            <p class="card-text">
-              created_at: {{ formatDate(post.created_at) }}
-            </p>
-            <router-link
-              :to="`/edit-post/${post.id}`"
-              class="btn btn-primary me-2"
-              >Edit post</router-link
-            >
+            <p class="card-text">created_at: {{ formatDate(post.created_at) }}</p>
+            <router-link :to="`/edit-post/${post.id}`" class="btn btn-primary me-2">Edit post</router-link>
             <DeletePost :postId="post.id" @postDeleted="handlePostDeleted" />
           </div>
         </div>
@@ -99,7 +85,4 @@ ul li {
   margin-top: 10px;
   font-weight: bold;
 }
- #edit {
-  margin-right: 5px;
-} 
 </style>

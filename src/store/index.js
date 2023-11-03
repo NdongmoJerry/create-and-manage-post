@@ -1,29 +1,31 @@
 import { createStore } from "vuex";
 import axios from "axios";
 import router from "../router";
-
+const BACKEND_URL =  'http://localhost:3000';
 const store = createStore({
   state: {
     posts: [],
     showDeleteAlert: false,
-    post: {
-      image: "",
-      tags: [
-        "transport",
-        "sports",
-        "people",
-        "nightlife",
-        "nature",
-        "food",
-        "fashion",
-        "city",
-        "cats",
-        "business",
-        "other",
-      ],
+    selectedPost: {
+      id: '',
+      image: '',
       selectedTags: [],
-      description: "",
+      description: '',
+      created_at: '',
     },
+    allTags: [
+      "transport",
+      "sports",
+      "people",
+      "nightlife",
+      "nature",
+      "food",
+      "fashion",
+      "city",
+      "cats",
+      "business",
+      "other",
+    ], // Store all available tags
   },
   getters: {
     sortedPosts: (state) => {
@@ -36,20 +38,26 @@ const store = createStore({
     SET_POSTS(state, posts) {
       state.posts = posts;
     },
+    SET_SELECTED_POST(state, post) {
+      state.selectedPost = post;
+    },
+    SET_SELECTED_TAGS(state, tags) {
+      state.selectedPost.selectedTags = tags;
+    },
     REMOVE_DELETED_POST(state, deletedPostId) {
       state.posts = state.posts.filter((post) => post.id !== deletedPostId);
     },
-    SET_SHOW_CREATE_ALERT(state, value) {
-      state.showCreateAlert = value;
-    },
     SET_SHOW_DELETE_ALERT(state, value) {
       state.showDeleteAlert = value;
+    },
+    SET_SHOW_CREATE_ALERT(state, value) {
+      state.showCreateAlert = value;
     },
   },
   actions: {
     fetchPosts({ commit }) {
       return axios
-        .get("http://localhost:3000/posts")
+        .get(`${BACKEND_URL}/posts`)
         .then((response) => {
           console.log("Posts:", response.data);
           commit("SET_POSTS", response.data);
@@ -60,9 +68,37 @@ const store = createStore({
           throw error;
         });
     },
+    fetchPost({ commit }, postId) {
+      axios
+        .get(`${BACKEND_URL}/posts/${postId}`)
+        .then((response) => {
+          commit('SET_SELECTED_POST', response.data);
+          commit('SET_SELECTED_TAGS', response.data.tags);
+        })
+        .catch((error) => {
+          console.error("Error fetching post:", error);
+        });
+    },
+    updatePost({ state }, postId) {
+      const updatedPost = {
+        image: state.selectedPost.image,
+        tags: state.selectedPost.selectedTags,
+        description: state.selectedPost.description,
+        created_at: state.selectedPost.created_at,
+      };
+      axios
+        .put(`${BACKEND_URL}/posts/${postId}`, updatedPost)
+        .then((response) => {
+          console.log("Post updated:", response.data);
+          router.push("/post-list");
+        })
+        .catch((error) => {
+          console.error("Error updating post:", error);
+        });
+    },
     deletePost({ commit }, postId) {
       return axios
-        .delete(`http://localhost:3000/posts/${postId}`)
+        .delete(`${BACKEND_URL}/posts/${postId}`)
         .then(() => {
           console.log("Post deleted successfully");
           commit("REMOVE_DELETED_POST", postId);
@@ -76,27 +112,21 @@ const store = createStore({
           throw error;
         });
     },
-    savePost({ state, commit }) {
-      const post = {
-        image: state.post.image,
-        tags: state.post.selectedTags,
-        description: state.post.description,
+    savePost({ commit }, post) {
+      const newPost = {
+        ...post,
         created_at: new Date().toISOString(),
       };
-  
-      axios
-        .post("http://localhost:3000/posts", post)
+
+      return axios
+        .post(`${BACKEND_URL}/posts`, newPost)
         .then((response) => {
           console.log("Post created:", response.data);
-          // Reset the form data
-          state.post.image = "";
-          state.post.selectedTags = [];
-          state.post.description = "";
-          commit("SET_SHOW_CREATE_ALERT", true);
+          router.push("/post-list");
+          commit("SET_SHOW_CREATE_ALERT", true); // Call the mutation
           setTimeout(() => {
             commit("SET_SHOW_CREATE_ALERT", false);
           }, 3000);
-          router.push("/post-list");
         })
         .catch((error) => {
           console.error("Error creating post:", error);
