@@ -23,6 +23,7 @@
           <div class="card-body">
             <p class="card-text">{{ post.description }}</p>
             <p class="card-text">created_at: {{ formatDate(post.created_at) }}</p>
+            <p class="card-text">updated_at: {{ formatDate(post.updated_at) }}</p>
             <router-link :to="`/edit-post/${post.id}`" class="btn btn-primary me-2">Edit post</router-link>
             <DeletePost :postId="post.id" @postDeleted="handlePostDeleted" />
           </div>
@@ -48,6 +49,14 @@ export default {
     },
     showCreateAlert() {
       return this.$store.state.showCreateAlert;
+    },
+    sortedPosts() {
+      return this.$store.getters.sortedPosts.map(post => {
+        return {
+          ...post,
+          updated_at: this.$store.state.posts.find(p => p.id === post.id).updated_at, // Add this line
+        };
+      });
     },
   },
   created() {

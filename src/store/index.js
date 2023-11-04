@@ -85,7 +85,9 @@ const store = createStore({
         tags: state.selectedPost.selectedTags,
         description: state.selectedPost.description,
         created_at: state.selectedPost.created_at,
+        updated_at: new Date().toISOString(), // Update the updated_at field with the current time
       };
+    
       axios
         .put(`${BACKEND_URL}/posts/${postId}`, updatedPost)
         .then((response) => {
@@ -116,8 +118,9 @@ const store = createStore({
       const newPost = {
         ...post,
         created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(), // Set updated_at to created_at when saving a new post
       };
-
+  
       return axios
         .post(`${BACKEND_URL}/posts`, newPost)
         .then((response) => {
