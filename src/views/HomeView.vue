@@ -1,17 +1,12 @@
 <template>
-  <div>
-    <PostList />
-   </div>
-  </template>
-  
-  <script>
-  import  PostList from '../components/PostList.vue';
-  export default {
-    name: 'HomeView',
-    components:{
-      PostList
-  
-    }
-  }
-  </script>
-  
+  <div class="home">
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'HomeView',
+});
+</script>

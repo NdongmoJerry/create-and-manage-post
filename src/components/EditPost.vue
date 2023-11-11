@@ -45,7 +45,7 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
 import Multiselect from "vue-multiselect";
 import { mapState, mapActions } from 'vuex';
 

@@ -2,7 +2,7 @@
   <button class="btn btn-danger" @click="confirmDeletePost">Delete post</button>
 </template>
 
-<script>
+<script lang="ts">
 import { mapActions } from "vuex";
 
 export default {
