@@ -3,10 +3,11 @@
 </template>
 
 <script lang="ts">
-import { mapActions } from "vuex";
+import { defineComponent } from 'vue';
+import { mapActions } from 'vuex';
 
-export default {
-  name: "DeletePost",
+export default defineComponent({
+  name: 'DeletePost',
   props: {
     postId: {
       type: Number,
@@ -14,12 +15,12 @@ export default {
     },
   },
   methods: {
-    confirmDeletePost() {
-      if (confirm("Are you sure you want to delete this post?")) {
+    confirmDeletePost(): void {
+      if (confirm('Are you sure you want to delete this post?')) {
         this.deletePost(this.postId);
       }
     },
-    ...mapActions(["deletePost"]),
+    ...mapActions(['deletePost']),
   },
-};
+});
 </script>

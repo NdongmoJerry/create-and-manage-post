@@ -24,5 +24,14 @@ npm run lint
 ```
 json-server --watch src/db/db.json
 ```
+
+
+The first step is addind TypeScript through the Vue Cli:
+
+```shell
+npm install @vue/cli -g
+vue add @vue/typescript
+```
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

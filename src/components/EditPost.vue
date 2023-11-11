@@ -46,10 +46,10 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue';
 import Multiselect from "vue-multiselect";
 import { mapState, mapActions } from 'vuex';
-
-export default {
+export default defineComponent({
   name: "EditPost",
   components: {
     Multiselect,
@@ -64,5 +64,5 @@ export default {
   methods: {
     ...mapActions(['fetchPost', 'fetchAllTags', 'updatePost']),
   },
-};
+});
 </script>
