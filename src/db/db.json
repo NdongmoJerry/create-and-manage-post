@@ -7,28 +7,11 @@
       ],
       "description": "This is for transportation",
       "created_at": "2023-11-04T08:27:40.832Z",
-      "updated_at": "2023-11-04T08:29:43.367Z",
-      "id": 1
-    },
-    {
-      "image": "https://loremflickr.com/320/240",
-      "tags": [
-        "sports"
-      ],
-      "description": "For sports",
-      "created_at": "2023-11-04T08:27:52.345Z",
-      "updated_at": "2023-11-04T08:30:26.936Z",
-      "id": 2
-    },
-    {
-      "image": "https://loremflickr.com/320/240",
-      "tags": [
+      "updated_at": "2023-11-13T19:43:04.372Z",
+      "id": 1,
+      "selectedTags": [
         "people"
-      ],
-      "description": "fjfgjfggthjy",
-      "created_at": "2023-11-04T08:28:03.160Z",
-      "updated_at": "2023-11-04T08:28:03.160Z",
-      "id": 3
+      ]
     },
     {
       "image": "https://loremflickr.com/320/240",
@@ -41,34 +24,37 @@
       "id": 4
     },
     {
+      "id": 5,
       "image": "https://loremflickr.com/320/240",
       "tags": [
         "nightlife"
       ],
       "description": "cfjhkfjl",
       "created_at": "2023-11-04T08:28:26.921Z",
-      "updated_at": "2023-11-04T08:28:26.921Z",
-      "id": 5
+      "updated_at": "2023-11-13T20:11:07.665Z"
     },
     {
       "image": "https://loremflickr.com/320/240",
       "tags": [
-        "nature"
+        null
       ],
       "description": "sgdfhjikiujh",
       "created_at": "2023-11-04T08:28:36.936Z",
-      "updated_at": "2023-11-04T08:28:36.936Z",
-      "id": 6
+      "updated_at": "2023-11-13T19:56:17.922Z",
+      "id": 6,
+      "selectedTags": [
+        "people"
+      ]
     },
     {
+      "id": 7,
       "image": "https://loremflickr.com/320/240",
       "tags": [
         "food"
       ],
       "description": "djhgkljh",
       "created_at": "2023-11-04T08:28:53.594Z",
-      "updated_at": "2023-11-04T08:28:53.594Z",
-      "id": 7
+      "updated_at": "2023-11-13T19:40:37.939Z"
     },
     {
       "image": "https://loremflickr.com/320/240",
@@ -89,6 +75,40 @@
       "created_at": "2023-11-11T08:38:38.221Z",
       "updated_at": "2023-11-11T08:38:38.221Z",
       "id": 10
+    },
+    {
+      "id": 12,
+      "image": "https://loremflickr.com/320/240",
+      "tags": [
+        "nature",
+        "other"
+      ],
+      "selectedTags": [],
+      "description": "This is nature and other",
+      "created_at": "2023-11-13T19:32:27.989Z",
+      "updated_at": "2023-11-13T20:27:08.409Z"
+    },
+    {
+      "image": "https://loremflickr.com/320/240",
+      "tags": [
+        "fashion"
+      ],
+      "description": "For fashion ",
+      "created_at": "2023-11-13T20:26:00.729Z",
+      "updated_at": "2023-11-13T20:26:00.729Z",
+      "id": 13
+    },
+    {
+      "id": 14,
+      "image": "https://loremflickr.com/320/240",
+      "tags": [
+        "transport",
+        "nature"
+      ],
+      "selectedTags": [],
+      "description": "This is transportation",
+      "created_at": "2023-11-13T20:26:34.217Z",
+      "updated_at": "2023-11-13T20:27:23.284Z"
     }
   ]
 }
