@@ -21,7 +21,7 @@
           <div class="form-group">
             <label for="tags">Tags</label>
             <multiselect
-              v-model="selectedPost.selectedTags"
+              v-model="selectedPost.tags"
               :options="allTags"
               :multiple="true"
               :close-on-select="true"

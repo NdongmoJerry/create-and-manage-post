@@ -13,7 +13,6 @@ const store = createStore<AppState>({
     selectedPost: {
       id: '',
       image: '',
-      selectedTags: [],
       tags: [],
       description: '',
       created_at: '',
@@ -50,7 +49,7 @@ const store = createStore<AppState>({
       state.selectedPost = post;
     },
     SET_SELECTED_TAGS(state: AppState, tags: string[]) {
-      state.selectedPost.selectedTags = tags;
+      state.selectedPost.tags = tags;
     },
     REMOVE_DELETED_POST(state: AppState, deletedPostId: string) {
       state.posts = state.posts.filter((post) => post.id !== deletedPostId);
@@ -91,8 +90,7 @@ const store = createStore<AppState>({
       const updatedPost: Post = {
         id: '', 
         image: state.selectedPost.image,
-        tags: state.selectedPost.selectedTags,
-        selectedTags: [],
+        tags: state.selectedPost.tags,
         description: state.selectedPost.description,
         created_at: state.selectedPost.created_at,
         updated_at: new Date().toISOString(), // Update the updated_at field with the current time

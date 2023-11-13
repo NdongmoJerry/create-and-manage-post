@@ -21,7 +21,7 @@
           <div class="form-group">
             <label for="tags">Tags</label>
             <multiselect
-              v-model="selectedTags"
+              v-model="tags"
               :options="allTags"
               :multiple="true"
               :close-on-select="true"
@@ -59,7 +59,7 @@ export default defineComponent({
     const store = useStore();
 
     const image = ref("");
-    const selectedTags = ref<string[]>([]);
+    const tags = ref<string[]>([]);
     const description = ref("");
 
     const allTags = computed(() => {
@@ -69,13 +69,13 @@ export default defineComponent({
     const submitPost = () => {
       const post: Post = {
         image: image.value,
-        tags: selectedTags.value,
+        tags: tags.value,
         description: description.value,
       };
       store.dispatch("savePost", post)
         .then(() => {
           image.value = "";
-          selectedTags.value = [];
+          tags.value = [];
           description.value = "";
         })
         .catch((error: string) => {
@@ -85,7 +85,7 @@ export default defineComponent({
 
     return {
       image,
-      selectedTags,
+      tags,
       description,
       allTags,
       submitPost,

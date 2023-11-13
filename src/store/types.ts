@@ -2,7 +2,6 @@ export interface Post {
   id: string;
   image: string;
   tags: string[];
-  selectedTags: string[];
   description: string;
   created_at: string;
   updated_at: string; 
