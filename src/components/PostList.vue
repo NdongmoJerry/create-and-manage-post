@@ -1,12 +1,22 @@
 <template>
   <div class="container">
     <div>
-      <router-link class="btn btn-primary my-3" to="/create-post">Create Post</router-link>
+      <router-link class="btn btn-primary my-3" to="/create-post"
+        >Create Post</router-link
+      >
     </div>
-    <div v-if="showCreateAlert" class="alert alert-success fixed-top" role="alert">
+    <div
+      v-if="showCreateAlert"
+      class="alert alert-success fixed-top"
+      role="alert"
+    >
       Post created successfully
     </div>
-    <div v-if="showDeleteAlert" class="alert alert-success fixed-top" role="alert">
+    <div
+      v-if="showDeleteAlert"
+      class="alert alert-success fixed-top"
+      role="alert"
+    >
       Post deleted successfully
     </div>
     <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -22,9 +32,17 @@
           </ul>
           <div class="card-body">
             <p class="card-text">{{ post.description }}</p>
-            <p class="card-text">created_at: {{ formatDate(post.created_at) }}</p>
-            <p class="card-text">updated_at: {{ formatDate(post.updated_at) }}</p>
-            <router-link :to="`/edit-post/${post.id}`" class="btn btn-primary me-2">Edit post</router-link>
+            <p class="card-text">
+              created_at: {{ formatDate(post.created_at) }}
+            </p>
+            <p class="card-text">
+              updated_at: {{ formatDate(post.updated_at) }}
+            </p>
+            <router-link
+              :to="`/edit-post/${post.id}`"
+              class="btn btn-primary me-2"
+              >Edit post</router-link
+            >
             <DeletePost :postId="post.id" />
           </div>
         </div>
@@ -34,37 +52,56 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { mapActions, mapGetters } from 'vuex';
-import DeletePost from '../components/ DeletePost.vue';
+import { defineComponent } from "vue";
+import { useStore } from "vuex";
+import { computed, onMounted } from "vue";
+import DeletePost from "../components/ DeletePost.vue";
 
 export default defineComponent({
-  name: 'PostList',
+  name: "PostList",
   components: {
     DeletePost,
   },
-  computed: {
-    ...mapGetters(['sortedPosts', 'showDeleteAlert', 'showCreateAlert']),
-  },
-  created() {
-    this.fetchPosts();
-  },
-  methods: {
-    ...mapActions(['deletePost', 'fetchPosts']),
-    formatDate(dateString: string): string {
+  setup() {
+    const store = useStore();
+
+    const sortedPosts = computed(() => store.getters.sortedPosts);
+    const showDeleteAlert = computed(() => store.getters.showDeleteAlert);
+    const showCreateAlert = computed(() => store.getters.showCreateAlert);
+
+    const fetchPosts = () => {
+      store.dispatch("fetchPosts");
+    };
+
+    const deletePost = (postId) => {
+      store.dispatch("deletePost", postId);
+    };
+
+    const formatDate = (dateString) => {
       const date = new Date(dateString);
       const options: Intl.DateTimeFormatOptions = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-        timeZone: 'Africa/Lagos',
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        timeZone: "Africa/Lagos",
       };
       return date.toLocaleString(undefined, options);
-    },
-    
+    };
+
+    onMounted(() => {
+      fetchPosts();
+    });
+
+    return {
+      sortedPosts,
+      showDeleteAlert,
+      showCreateAlert,
+      deletePost,
+      formatDate,
+    };
   },
 });
 </script>

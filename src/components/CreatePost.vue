@@ -11,12 +11,7 @@
         <form @submit.prevent="submitPost">
           <div class="form-group">
             <label>Image URL:</label>
-            <input
-              type="text"
-              v-model="image"
-              class="form-control"
-              required
-            />
+            <input type="text" v-model="image" class="form-control" required />
           </div>
           <div class="form-group">
             <label for="tags">Tags</label>
@@ -45,7 +40,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, ref, computed } from "vue";
 import Multiselect from "vue-multiselect";
 import { useStore } from "vuex";
 import { Post } from "../components/types";
@@ -72,7 +67,8 @@ export default defineComponent({
         tags: tags.value,
         description: description.value,
       };
-      store.dispatch("savePost", post)
+      store
+        .dispatch("savePost", post)
         .then(() => {
           image.value = "";
           tags.value = [];
