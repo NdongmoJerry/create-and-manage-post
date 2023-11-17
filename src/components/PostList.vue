@@ -25,7 +25,7 @@
             <p class="card-text">created_at: {{ formatDate(post.created_at) }}</p>
             <p class="card-text">updated_at: {{ formatDate(post.updated_at) }}</p>
             <router-link :to="`/edit-post/${post.id}`" class="btn btn-primary me-2">Edit post</router-link>
-            <DeletePost :postId="post.id" @postDeleted="handlePostDeleted" />
+            <DeletePost :postId="post.id" />
           </div>
         </div>
       </div>
@@ -33,65 +33,38 @@
   </div>
 </template>
 
-<script>
-import { mapActions, mapGetters } from "vuex";
-import DeletePost from "../components/ DeletePost.vue";
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { mapActions, mapGetters } from 'vuex';
+import DeletePost from '../components/ DeletePost.vue';
 
-export default {
-  name: "PostList",
+export default defineComponent({
+  name: 'PostList',
   components: {
     DeletePost,
   },
   computed: {
-    ...mapGetters(["sortedPosts"]),
-    showDeleteAlert() {
-      return this.$store.state.showDeleteAlert;
-    },
-    showCreateAlert() {
-      return this.$store.state.showCreateAlert;
-    },
-    sortedPosts() {
-      return this.$store.getters.sortedPosts.map(post => {
-        return {
-          ...post,
-          updated_at: this.$store.state.posts.find(p => p.id === post.id).updated_at, // Add this line
-        };
-      });
-    },
+    ...mapGetters(['sortedPosts', 'showDeleteAlert', 'showCreateAlert']),
   },
   created() {
-    this.$store.dispatch("fetchPosts");
+    this.fetchPosts();
   },
   methods: {
-    ...mapActions(["deletePost"]),
-
-    formatDate(dateString) {
+    ...mapActions(['deletePost', 'fetchPosts']),
+    formatDate(dateString: string): string {
       const date = new Date(dateString);
-      const options = {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        second: "numeric",
-        timeZone: "Africa/Lagos",
+      const options: Intl.DateTimeFormatOptions = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        timeZone: 'Africa/Lagos',
       };
       return date.toLocaleString(undefined, options);
     },
+    
   },
-};
+});
 </script>
-
-<style scoped>
-.card-img-top {
-  object-fit: cover;
-  max-width: 100%;
-  max-height: 320px;
-}
-
-ul li {
-  list-style: none;
-  margin-top: 10px;
-  font-weight: bold;
-}
-</style>

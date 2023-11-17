@@ -21,7 +21,7 @@
           <div class="form-group">
             <label for="tags">Tags</label>
             <multiselect
-              v-model="selectedTags"
+              v-model="tags"
               :options="allTags"
               :multiple="true"
               :close-on-select="true"
@@ -44,47 +44,52 @@
     </div>
   </div>
 </template>
-
-<script>
+<script lang="ts">
+import { defineComponent, ref, computed } from 'vue';
 import Multiselect from "vue-multiselect";
-import { mapActions } from "vuex";
+import { useStore } from "vuex";
+import { Post } from "../components/types";
 
-export default {
+export default defineComponent({
   name: "CreatePost",
   components: {
     Multiselect,
   },
-  data() {
-    return {
-      image: "",
-      selectedTags: [],
-      description: "",
-    };
-  },
-  computed: {
-    allTags() {
-      return this.$store.state.allTags;
-    },
-  },
-  methods: {
-    ...mapActions(["savePost"]),
-    submitPost() {
-      const post = {
-        image: this.image,
-        tags: this.selectedTags,
-        description: this.description,
+  setup() {
+    const store = useStore();
+
+    const image = ref("");
+    const tags = ref<string[]>([]);
+    const description = ref("");
+
+    const allTags = computed(() => {
+      return store.state.allTags;
+    });
+
+    const submitPost = () => {
+      const post: Post = {
+        image: image.value,
+        tags: tags.value,
+        description: description.value,
       };
-      this.savePost(post)
+      store.dispatch("savePost", post)
         .then(() => {
-          this.image = "";
-          this.selectedTags = [];
-          this.description = "";
+          image.value = "";
+          tags.value = [];
+          description.value = "";
         })
-        .catch((error) => {
+        .catch((error: string) => {
           console.error("Error saving post:", error);
         });
-    },
-  },
-};
-</script>
+    };
 
+    return {
+      image,
+      tags,
+      description,
+      allTags,
+      submitPost,
+    };
+  },
+});
+</script>

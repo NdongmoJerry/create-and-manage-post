@@ -21,7 +21,7 @@
           <div class="form-group">
             <label for="tags">Tags</label>
             <multiselect
-              v-model="selectedPost.selectedTags"
+              v-model="selectedPost.tags"
               :options="allTags"
               :multiple="true"
               :close-on-select="true"
@@ -45,11 +45,11 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue';
 import Multiselect from "vue-multiselect";
 import { mapState, mapActions } from 'vuex';
-
-export default {
+export default defineComponent({
   name: "EditPost",
   components: {
     Multiselect,
@@ -64,5 +64,5 @@ export default {
   methods: {
     ...mapActions(['fetchPost', 'fetchAllTags', 'updatePost']),
   },
-};
+});
 </script>
