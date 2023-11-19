@@ -1,12 +1,12 @@
-import { createStore, Store, MutationTree, ActionTree, GetterTree } from 'vuex';
-import axios from 'axios';
 import { reactive, computed } from 'vue';
+import { createStore } from 'vuex';
+import axios from 'axios';
 import router from '../router';
 import { Post, AppState } from '../store/types';
 
 const BACKEND_URL = 'http://localhost:3000';
 
-const state: AppState = reactive({
+const initialState: AppState = {
   posts: [],
   showDeleteAlert: false,
   showCreateAlert: false,
@@ -31,7 +31,9 @@ const state: AppState = reactive({
     'business',
     'other',
   ],
-});
+};
+
+const state = reactive(initialState);
 
 const sortedPosts = computed<Post[]>(() => {
   return state.posts
@@ -39,29 +41,28 @@ const sortedPosts = computed<Post[]>(() => {
     .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 });
 
-const mutations: MutationTree<AppState> = {
-  SET_POSTS(state, posts: Post[]) {
+const mutations = {
+  SET_POSTS(state: AppState, posts: Post[]) {
     state.posts = posts;
   },
-  SET_SELECTED_POST(state, post: Post) {
+  SET_SELECTED_POST(state: AppState, post: Post) {
     state.selectedPost = post;
   },
-  SET_SELECTED_TAGS(state, tags: string[]) {
+  SET_SELECTED_TAGS(state: AppState, tags: string[]) {
     state.selectedPost.tags = tags;
   },
-  REMOVE_DELETED_POST(state, deletedPostId: number) {
+  REMOVE_DELETED_POST(state: AppState, deletedPostId: number) {
     state.posts = state.posts.filter((post) => post.id !== deletedPostId);
   },
-  SET_SHOW_DELETE_ALERT(state, value: boolean) {
+  SET_SHOW_DELETE_ALERT(state: AppState, value: boolean) {
     state.showDeleteAlert = value;
   },
-  SET_SHOW_CREATE_ALERT(state, value: boolean) {
+  SET_SHOW_CREATE_ALERT(state: AppState, value: boolean) {
     state.showCreateAlert = value;
   },
 };
-
-const actions: ActionTree<AppState, AppState> = {
-  async fetchPosts({ commit }) {
+const actions = {
+  async fetchPosts({ commit }: { commit: Function }) {
     try {
       const response = await axios.get<Post[]>(`${BACKEND_URL}/posts`);
       console.log('Posts:', response.data);
@@ -72,7 +73,7 @@ const actions: ActionTree<AppState, AppState> = {
       throw error;
     }
   },
-  async fetchPost({ commit }, postId: string) {
+  async fetchPost({ commit }: { commit: Function }, postId: string) {
     try {
       const response = await axios.get(`${BACKEND_URL}/posts/${postId}`);
       commit('SET_SELECTED_POST', response.data);
@@ -81,9 +82,9 @@ const actions: ActionTree<AppState, AppState> = {
       console.error('Error fetching post:', error);
     }
   },
-  async updatePost({ state }, postId: number) {
+  async updatePost({ state }: { state: AppState }, postId: number) {
     const updatedPost: Post = {
-      id:  postId,
+      id: postId,
       image: state.selectedPost.image,
       tags: state.selectedPost.tags,
       description: state.selectedPost.description,
@@ -99,7 +100,7 @@ const actions: ActionTree<AppState, AppState> = {
       console.error('Error updating post:', error);
     }
   },
-  async deletePost({ commit }, postId: string) {
+  async deletePost({ commit }: { commit: Function }, postId: string) {
     try {
       await axios.delete(`${BACKEND_URL}/posts/${postId}`);
       console.log('Post deleted successfully');
@@ -113,7 +114,7 @@ const actions: ActionTree<AppState, AppState> = {
       throw error;
     }
   },
-  async savePost({ commit }, post: Post) {
+  async savePost({ commit }: { commit: Function }, post: Post) {
     const newPost: Post = {
       ...post,
       created_at: new Date().toISOString(),
@@ -134,18 +135,26 @@ const actions: ActionTree<AppState, AppState> = {
     }
   },
 };
-
-const getters: GetterTree<AppState, AppState> = {
-  sortedPosts: () => sortedPosts.value,
-  showDeleteAlert: (state) => state.showDeleteAlert,
-  showCreateAlert: (state) => state.showCreateAlert,
+const getters = {
+  sortedPosts(state: AppState) {
+    return sortedPosts.value;
+  },
+  showDeleteAlert(state: AppState) {
+    return state.showDeleteAlert;
+  },
+  showCreateAlert(state: AppState) {
+    return state.showCreateAlert;
+  },
 };
-
-const store: Store<AppState> = createStore({
+export default createStore({
   state,
   mutations,
   actions,
   getters,
+<<<<<<< HEAD
+});
+=======
 });
 
 export default store;
+>>>>>>> c9dab5ca18d9dbda14c1380fa4f34fef4636e09a
