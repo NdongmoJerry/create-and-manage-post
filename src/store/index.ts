@@ -151,10 +151,5 @@ export default createStore({
   mutations,
   actions,
   getters,
-<<<<<<< HEAD
 });
-=======
-});
-
 export default store;
->>>>>>> c9dab5ca18d9dbda14c1380fa4f34fef4636e09a
