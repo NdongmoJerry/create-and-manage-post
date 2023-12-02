@@ -21,7 +21,7 @@
           <div class="form-group">
             <label for="tags">Tags</label>
             <multiselect
-              v-model="selectedPost.selectedTags"
+              v-model="selectedPost.tags"
               :options="allTags"
               :multiple="true"
               :close-on-select="true"
@@ -45,24 +45,49 @@
     </div>
   </div>
 </template>
-<script>
-import Multiselect from "vue-multiselect";
-import { mapState, mapActions } from 'vuex';
 
-export default {
+<script lang="ts">
+import { defineComponent, ref, onMounted, getCurrentInstance } from "vue";
+import Multiselect from "vue-multiselect";
+import { useStore } from "vuex";
+
+export default defineComponent({
   name: "EditPost",
   components: {
     Multiselect,
   },
-  computed: {
-    ...mapState(["selectedPost", "allTags"]),
+  setup() {
+    const store = useStore();
+    const selectedPost = ref({
+      id: 0,
+      image: "",
+      tags: [],
+      description: "",
+    });
+
+    const allTags = store.state.allTags;
+
+    const fetchPost = async (postId) => {
+      await store.dispatch("fetchPost", postId);
+      selectedPost.value = store.state.selectedPost;
+    };
+    const updatePost = async (postId) => {
+      await store.dispatch("updatePost", postId);
+    };
+
+    onMounted(() => {
+      const route = getCurrentInstance()?.proxy?.$route;
+      if (route) {
+        const postId = route.params.id;
+        fetchPost(postId);
+      }
+    });
+
+    return {
+      selectedPost,
+      allTags,
+      updatePost,
+    };
   },
-  created() {
-    const postId = this.$route.params.id;
-    this.fetchPost(postId);
-  },
-  methods: {
-    ...mapActions(['fetchPost', 'fetchAllTags', 'updatePost']),
-  },
-};
+});
 </script>

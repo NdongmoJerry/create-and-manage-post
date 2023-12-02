@@ -2,10 +2,11 @@
   <button class="btn btn-danger" @click="confirmDeletePost">Delete post</button>
 </template>
 
-<script>
-import { mapActions } from "vuex";
+<script lang="ts">
+import { defineComponent } from "vue";
+import { useStore } from "vuex";
 
-export default {
+export default defineComponent({
   name: "DeletePost",
   props: {
     postId: {
@@ -13,13 +14,22 @@ export default {
       required: true,
     },
   },
-  methods: {
-    confirmDeletePost() {
+  setup(props) {
+    const store = useStore();
+
+    const confirmDeletePost = () => {
       if (confirm("Are you sure you want to delete this post?")) {
-        this.deletePost(this.postId);
+        deletePost(props.postId);
       }
-    },
-    ...mapActions(["deletePost"]),
+    };
+
+    const deletePost = (postId) => {
+      store.dispatch("deletePost", postId);
+    };
+
+    return {
+      confirmDeletePost,
+    };
   },
-};
+});
 </script>
