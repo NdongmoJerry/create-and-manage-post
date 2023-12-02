@@ -49,7 +49,7 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted, getCurrentInstance } from "vue";
 import Multiselect from "vue-multiselect";
-import { useStore } from "vuex";
+import { useStore } from "../store/index";
 
 export default defineComponent({
   name: "EditPost",
@@ -57,28 +57,30 @@ export default defineComponent({
     Multiselect,
   },
   setup() {
-    const store = useStore();
+    const store = useStore(); 
+
     const selectedPost = ref({
       id: 0,
       image: "",
-      tags: [],
+      tags: [] as string[], 
       description: "",
     });
 
-    const allTags = store.state.allTags;
+    const allTags = store.$state.allTags; // Access the state using $state
 
-    const fetchPost = async (postId) => {
-      await store.dispatch("fetchPost", postId);
-      selectedPost.value = store.state.selectedPost;
+    const fetchPost = async (postId: string) => { 
+      await store.fetchPost(postId); // Use the fetchPost action directly from the store
+      selectedPost.value = store.$state.selectedPost;
     };
-    const updatePost = async (postId) => {
-      await store.dispatch("updatePost", postId);
+
+    const updatePost = async (postId: number) => { 
+      await store.updatePost(postId); // Use the updatePost action directly from the store
     };
 
     onMounted(() => {
       const route = getCurrentInstance()?.proxy?.$route;
       if (route) {
-        const postId = route.params.id;
+        const postId = route.params.id.toString(); // Convert postId to string
         fetchPost(postId);
       }
     });

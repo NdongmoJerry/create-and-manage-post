@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { useStore } from "vuex";
+import { useStore } from "../store/index";
 
 export default defineComponent({
   name: "DeletePost",
@@ -17,14 +17,19 @@ export default defineComponent({
   setup(props) {
     const store = useStore();
 
-    const confirmDeletePost = () => {
+    const confirmDeletePost = async () => {
       if (confirm("Are you sure you want to delete this post?")) {
-        deletePost(props.postId);
+        try {
+          await deletePost(props.postId);
+          store.posts = store.posts.filter((post) => post.id !== props.postId);
+        } catch (error) {
+          console.error("Failed to delete post:", error);
+        }
       }
     };
 
-    const deletePost = (postId) => {
-      store.dispatch("deletePost", postId);
+    const deletePost = async (postId) => {
+      await store.deletePost(postId);
     };
 
     return {
