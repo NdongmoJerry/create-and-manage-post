@@ -38,12 +38,13 @@
       </div>
     </div>
   </div>
-</template>
+</template>  
+
 <script lang="ts">
 import { defineComponent, ref, computed } from "vue";
 import Multiselect from "vue-multiselect";
-import { useStore } from "vuex";
-import { Post } from "../components/types";
+import { useStore } from "../store/index";
+import { Post } from "../store/types";
 
 export default defineComponent({
   name: "CreatePost",
@@ -58,27 +59,31 @@ export default defineComponent({
     const description = ref("");
 
     const allTags = computed(() => {
-      return store.state.allTags;
+      return store.$state.allTags;
     });
 
-    const submitPost = () => {
-      const post: Post = {
-        image: image.value,
-        tags: tags.value,
-        description: description.value,
-      };
-      store
-        .dispatch("savePost", post)
-        .then(() => {
-          image.value = "";
-          tags.value = [];
-          description.value = "";
-        })
-        .catch((error: string) => {
-          console.error("Error saving post:", error);
-        });
-    };
+   
+  const submitPost = () => {
+  const post: Post = {
+    id: 0, // Placeholder value for the id property
+    image: image.value,
+    tags: tags.value,
+    description: description.value,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  };
 
+  store
+    .savePost(post)
+    .then(() => {
+      image.value = "";
+      tags.value = [];
+      description.value = "";
+    })
+    .catch((error: string) => {
+      console.error("Error saving post:", error);
+    });
+};
     return {
       image,
       tags,
